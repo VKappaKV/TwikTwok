@@ -12,39 +12,28 @@ import { getTwok, register } from "../utility/ComunicationHandler";
 import { Twok } from "../components/Twok";
 import { FlatList } from "react-native-gesture-handler";
 
-const HomeBoard = () => {
-  //hardcoded sid (da sostituire con il context quando aggiungo la memoria locale)
-  //const { user, setUser } = useContext(UserContext);
-  const user = "L78v5Mv8vMdY620Vo0rP";
+const HomeBoard = ({ navigation }) => {
+  const { user, setUser } = useContext(UserContext);
+  const sid = user.sid;
   //Mappa Autori Twok con le loro PFP
   const [mapAut, SetmapAut] = useState(new Map());
   //array dei twok
   const [data, setData] = useState([]);
-  //oggetto di risposta usato per aggiornare data (in qualche modo confuso ma funziona [DA FIXARE E RIMUOVERE])
-  const [response, setResponse] = useState();
   //flag per gestire l'inizio dell'azione di scroll per visualizzare gli indicatori ai bordi
   const [beginScroll, setBeginScroll] = useState(false);
   useEffect(() => {
-    if (user == null) {
+    if (sid === "") {
       register()
-        .then((response) => {
-          console.log(response);
-          setUser(response.sid);
-        })
-        .catch((e) => console.log(e));
-    } else {
-      console.log("user già identificato: ", user);
-      handleGetTwok();
-      console.log(data);
+        .then((response) => setUser((user) => ({ ...user, sid: response })))
+        .catch((e) => console.log("[ERRORE]!! ", e));
     }
+    handleGetTwok().then((twok) => console.log(twok));
   }, []);
 
-  //funziona al load iniziale, ma non nello scroll o col button
-  const handleGetTwok = () => {
-    console.log("sono il get twok iniziale");
-    getTwok(user).then((response) => {
-      setData((existingData) => [...existingData, response]);
-    });
+  const handleGetTwok = async () => {
+    const response = await getTwok(sid);
+    setData((existingData) => [...existingData, response]);
+    return response;
   };
 
   return (
@@ -56,10 +45,11 @@ const HomeBoard = () => {
           data={data}
           renderItem={({ item }) => (
             <Twok
-              sid={user}
+              sid={sid}
               item={item}
               auts={mapAut}
               onLoadPicture={SetmapAut}
+              navigation={navigation}
             />
           )}
           keyExtractor={data.tid}
@@ -74,9 +64,9 @@ const HomeBoard = () => {
           onScrollEndDrag={() => {
             setBeginScroll(false);
           }}
-          onEndReachedThreshold={0.6}
+          onEndReachedThreshold={0.5}
           onEndReached={() => {
-            console.log("chiamo un nuovo Twok");
+            // console.log("chiamo un nuovo Twok");
             handleGetTwok();
           }}
         />

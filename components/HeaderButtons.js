@@ -4,7 +4,7 @@ const ProfileButton = ({ navigation }) => {
   return (
     <Button
       onPress={() => navigation.navigate("Profile")}
-      title="Profile"
+      title="Profilo"
       color="rgb(135,206,250)"
     />
   );

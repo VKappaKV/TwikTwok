@@ -1,4 +1,4 @@
-import { StyleSheet, Button, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import "react-native-gesture-handler";
@@ -6,8 +6,13 @@ import HomeBoard from "./screens/HomeBoard";
 import AddTwok from "./screens/AddTwok";
 import Profile from "./screens/Profile";
 import FollowedUsers from "./screens/FollowedUsers";
-import { UserContextProvider } from "./utility/Context";
+import UserContext, { UserContextProvider } from "./utility/Context";
 import { AddTwokButton, ProfileButton } from "./components/HeaderButtons";
+import UserBoard from "./screens/UserBoard";
+import { useContext, useEffect } from "react";
+//aggiungere Icone
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { register } from "./utility/ComunicationHandler";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,9 +27,9 @@ export default function App() {
             options={({ navigation }) => ({
               title: "Bacheca",
               headerStyle: {
-                backgroundColor: "rgb(30,144,255)",
+                backgroundColor: "rgb(135,206,250)",
               },
-              headerTintColor: "#fff",
+              headerTintColor: "white",
               headerTitleStyle: {
                 fontWeight: "bold",
               },
@@ -36,8 +41,8 @@ export default function App() {
                       justifyContent: "space-evenly",
                     }}
                   >
-                    <ProfileButton navigation={navigation} />
                     <AddTwokButton navigation={navigation} />
+                    <ProfileButton navigation={navigation} />
                   </View>
                 );
               },
@@ -49,9 +54,14 @@ export default function App() {
             options={{ title: "Aggiungi Twok" }}
           />
           <Stack.Screen
+            name="UserBoard"
+            component={UserBoard}
+            options={{ title: "Bacheca di un Utente " }}
+          />
+          <Stack.Screen
             name="Profile"
             component={Profile}
-            options={{ title: "Profilo di: ??" }}
+            options={{ title: "Tuo Profilo" }}
           />
           <Stack.Screen
             name="FollowedUsers"

@@ -1,7 +1,7 @@
 const RequestHandler = async (endpoint, params) => {
   const BASE_URL = "https://develop.ewlab.di.unimi.it/mc/twittok/";
 
-  console.log("FACCIO UNA RICHIESTA ALL'ENDPOINT: ", endpoint);
+  //console.log("FACCIO UNA RICHIESTA ALL'ENDPOINT: ", endpoint);
   const REQUEST_URL = BASE_URL + endpoint;
 
   const httpRequest = await fetch(REQUEST_URL, {

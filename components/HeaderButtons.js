@@ -1,22 +1,19 @@
-import { Button } from "react-native";
+import { Button, TouchableOpacity } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const ProfileButton = ({ navigation }) => {
   return (
-    <Button
-      onPress={() => navigation.navigate("Profile")}
-      title="Profilo"
-      color="rgb(135,206,250)"
-    />
+    <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+      <MaterialCommunityIcons name="account" color="white" size={50} />
+    </TouchableOpacity>
   );
 };
 
 const AddTwokButton = ({ navigation }) => {
   return (
-    <Button
-      onPress={() => navigation.navigate("AddTwok")}
-      title="Aggiungi Twok"
-      color="rgb(135,206,250)"
-    />
+    <TouchableOpacity onPress={() => navigation.navigate("AddTwok")}>
+      <MaterialCommunityIcons name="plus" color="white" size={50} />
+    </TouchableOpacity>
   );
 };
 

@@ -1,7 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import "react-native-gesture-handler";
 import HomeBoard from "./screens/HomeBoard";
 import AddTwok from "./screens/AddTwok";
 import Profile from "./screens/Profile";

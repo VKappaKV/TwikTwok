@@ -1,4 +1,4 @@
-import { StyleSheet, Button } from "react-native";
+import { StyleSheet, Button, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import "react-native-gesture-handler";
@@ -7,6 +7,7 @@ import AddTwok from "./screens/AddTwok";
 import Profile from "./screens/Profile";
 import FollowedUsers from "./screens/FollowedUsers";
 import { UserContextProvider } from "./utility/Context";
+import { AddTwokButton, ProfileButton } from "./components/HeaderButtons";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,20 +21,26 @@ export default function App() {
             component={HomeBoard}
             options={({ navigation }) => ({
               title: "Bacheca",
-              headerRight: () => (
-                <Button
-                  onPress={() => navigation.navigate("Profile")}
-                  title="Profile"
-                  color="grey"
-                />
-              ),
-              headerLeft: () => (
-                <Button
-                  onPress={() => navigation.navigate("AddTwok")}
-                  title="Aggiungi Twok"
-                  color="grey"
-                />
-              ),
+              headerStyle: {
+                backgroundColor: "rgb(30,144,255)",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+              headerRight: () => {
+                return (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-evenly",
+                    }}
+                  >
+                    <ProfileButton navigation={navigation} />
+                    <AddTwokButton navigation={navigation} />
+                  </View>
+                );
+              },
             })}
           />
           <Stack.Screen

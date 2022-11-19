@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import { getPicture } from "../utility/ComunicationHandler";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-const Twok = ({ item, sid, auts, onLoadPicture }) => {
+const Twok = ({ item, sid, auts, onLoadPicture, navigation }) => {
   const [loader, SetLoader] = useState(false);
 
   useEffect(() => {
@@ -26,10 +27,12 @@ const Twok = ({ item, sid, auts, onLoadPicture }) => {
           style={{ width: 50, height: 50 }}
         />
       )}
-      <Text style={styles.textStyle}>{item.text}</Text>
-      <Text>TID : {item.tid}</Text>
-      <Text>NAME: {item.name}</Text>
-      <Text>UID : {item.uid}</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("UserBoard")}>
+        <Text style={styles.textStyle}>{item.text}</Text>
+        <Text>TID : {item.tid}</Text>
+        <Text>NAME: {item.name}</Text>
+        <Text>UID : {item.uid}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -40,7 +43,7 @@ const styles = StyleSheet.create({
   twokStyle: {
     width: "100%",
     height: Dimensions.get("window").height,
-    backgroundColor: "yellow",
+    backgroundColor: "rgb(135, 206, 250)",
     alignItems: "center",
     justifyContent: "center",
   },

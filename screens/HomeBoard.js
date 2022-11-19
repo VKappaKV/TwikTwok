@@ -24,9 +24,6 @@ const HomeBoard = () => {
   const [response, setResponse] = useState();
   //flag per gestire l'inizio dell'azione di scroll per visualizzare gli indicatori ai bordi
   const [beginScroll, setBeginScroll] = useState(false);
-  //offset e direction utili per gestire l'aggiornamento dei twok solo quando si scrolla in basso
-  const [offset, SetOffset] = useState(0);
-  const [direction, SetDirection] = useState();
   useEffect(() => {
     if (user == null) {
       register()
@@ -46,17 +43,7 @@ const HomeBoard = () => {
   const handleGetTwok = () => {
     console.log("sono il get twok iniziale");
     getTwok(user).then((response) => {
-      setData((existingData) => {
-        return [...existingData, data.push(response)];
-      });
-    });
-  };
-
-  //funziona nello scroll e col button, non nello useEffect
-  const handleGetWorkingTwok = () => {
-    getTwok(user).then((response) => {
-      setResponse(response);
-      data.push(response);
+      setData((existingData) => [...existingData, response]);
     });
   };
 
@@ -84,34 +71,17 @@ const HomeBoard = () => {
           onScrollBeginDrag={() => {
             setBeginScroll(true);
           }}
-          //a fine scroll rimuovo il flag dell'evento scroll
           onScrollEndDrag={() => {
             setBeginScroll(false);
           }}
-          //lo uso per capire in che direzione avviene lo scroll
-          onScroll={(event) => {
-            let currentOffset = event.nativeEvent.contentOffset.y;
-            let direction = currentOffset > offset ? "down" : "up";
-            SetOffset(currentOffset);
-            SetDirection(direction);
-          }}
-          /* Metodo da utilizzare per ottenere un indice per l'oggetto della Flatlist in display, se è l'ultimo e scrollo verso il basso richiedo un nuovo Twok*/
-          onMomentumScrollEnd={(event) => {
-            const index = Math.floor(
-              Math.floor(event.nativeEvent.contentOffset.y) /
-                Math.floor(event.nativeEvent.layoutMeasurement.height)
-            );
-            if (direction === "down" && index === data.length) {
-              console.log("CARICO UN NUOVO TWOK");
-              handleGetWorkingTwok();
-            }
+          onEndReachedThreshold={0.6}
+          onEndReached={() => {
+            console.log("chiamo un nuovo Twok");
+            handleGetTwok();
           }}
         />
       </View>
       {beginScroll ? <Text>load more</Text> : null}
-      {data ? (
-        <Button title="Dammi un Twok" onPress={() => handleGetWorkingTwok()} />
-      ) : null}
     </SafeAreaView>
   );
 };

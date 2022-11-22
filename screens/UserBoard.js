@@ -16,7 +16,6 @@ const UserBoard = ({ navigation }) => {
   const sid = user.sid;
   const [mapAut, SetmapAut] = useState(new Map());
   const [data, setData] = useState([]);
-  const [beginScroll, setBeginScroll] = useState(false);
 
   useEffect(() => {
     handleGetTwok()
@@ -33,7 +32,6 @@ const UserBoard = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.twok}>
-        {beginScroll ? <Text>go back ^</Text> : null}
         <FlatList
           style={styles.list}
           data={data}
@@ -51,13 +49,6 @@ const UserBoard = ({ navigation }) => {
           snapToInterval={Dimensions.get("window").height}
           snapToAlignment="start"
           decelerationRate="fast"
-          //gestisco l'inizio dello scroll
-          onScrollBeginDrag={() => {
-            setBeginScroll(true);
-          }}
-          onScrollEndDrag={() => {
-            setBeginScroll(false);
-          }}
           onEndReachedThreshold={0.5}
           onEndReached={() => {
             // console.log("chiamo un nuovo Twok");
@@ -65,7 +56,6 @@ const UserBoard = ({ navigation }) => {
           }}
         />
       </View>
-      {beginScroll ? <Text>load more</Text> : null}
     </SafeAreaView>
   );
 };

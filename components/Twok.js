@@ -6,25 +6,22 @@ import {
   Image,
   Button,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { getPicture } from "../utility/ComunicationHandler";
 import UserContext from "../utility/Context";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Twok = ({ item, sid, auts, onLoadPicture, navigation }) => {
   const { user, setUser } = useContext(UserContext);
+  const [picture, SetPicture] = useState();
   const [loader, SetLoader] = useState(false);
-  const size = [20, 40, 60];
+  const size = [20, 30, 50];
+  const align = ["flex-start", "center", "flex-end"];
+  const fonttype = ["normal", "monospace", "serif"];
 
   useEffect(() => {
-    /*  console.log(
-      "il colore del twok: ",
-      item.text,
-      " è: ",
-      item.bgcol,
-      ". Colore font: ",
-      item.fontcol
-    ); */
     getPicture(sid, item.uid)
       .then((response) => {
         auts.has(item.uid)
@@ -33,45 +30,57 @@ const Twok = ({ item, sid, auts, onLoadPicture, navigation }) => {
           : onLoadPicture(auts.set(item.uid, response.picture));
         SetLoader(false);
       })
+      .then(() => SetPicture(auts.get(item.uid)))
       .catch((e) => console.log("[ERRORE FETCH PICTURE]", e));
   }, []);
 
   return (
-    <View
+    <SafeAreaView
       style={{
         width: "100%",
         height: Dimensions.get("window").height,
         backgroundColor: `#${item.bgcol}`,
-        alignItems: "center",
-        justifyContent: "center",
+        alignItems: align[item.halign],
+        justifyContent: align[item.valign],
       }}
     >
-      <TouchableOpacity
-        onPress={() => {
-          setUser((user) => ({ ...user, selectedUser: item.uid }));
-          navigation.navigate("UserBoard");
-        }}
-      >
-        {loader ? (
-          <Text>Loading...</Text>
-        ) : (
-          <Image
-            source={{ uri: "data:image/png;base64," + auts.get(item.uid) }}
-            style={{ width: 50, height: 50 }}
-          />
-        )}
+      <View style={{ marginBottom: 100 }}>
+        <View style={{ flexDirection: "row" }}>
+          <TouchableOpacity
+            onPress={() => {
+              setUser((user) => ({ ...user, selectedUser: item.uid }));
+              navigation.navigate("UserBoard");
+            }}
+          >
+            {loader ? (
+              <Text>Loading...</Text>
+            ) : picture == null ? (
+              <MaterialCommunityIcons
+                name="account-circle"
+                color={`#${item.fontcol}`}
+                size={80}
+              />
+            ) : (
+              <Image
+                source={{ uri: "data:image/png;base64," + auts.get(item.uid) }}
+                style={{ width: 80, height: 80 }}
+              />
+            )}
+            <Text style={{ color: `#${item.fontcol}` }}>{item.name}</Text>
+          </TouchableOpacity>
+        </View>
         <Text
           style={{
             fontSize: size[item.fontsize],
             color: `#${item.fontcol}`,
             fontWeight: "700",
+            fontFamily: fonttype[item.fonttype],
           }}
         >
           {item.text}
         </Text>
-        <Text style={{ color: `#${item.fontcol}` }}>NAME: {item.name}</Text>
-      </TouchableOpacity>
-    </View>
+      </View>
+    </SafeAreaView>
   );
 };
 

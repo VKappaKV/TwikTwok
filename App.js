@@ -50,22 +50,110 @@ export default function App() {
           <Stack.Screen
             name="AddTwok"
             component={AddTwok}
-            options={{ title: "Aggiungi Twok" }}
+            options={({ navigation }) => ({
+              title: "Posta Un Twok",
+              headerStyle: {
+                backgroundColor: "rgb(135,206,250)",
+              },
+              headerTintColor: "white",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+              headerRight: () => {
+                return (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-evenly",
+                    }}
+                  >
+                    <AddTwokButton navigation={navigation} />
+                    <ProfileButton navigation={navigation} />
+                  </View>
+                );
+              },
+            })}
           />
           <Stack.Screen
             name="UserBoard"
             component={UserBoard}
-            options={{ title: "Bacheca di un Utente " }}
+            options={({ navigation }) => ({
+              title: "Bacheca Utente",
+              headerStyle: {
+                backgroundColor: "rgb(135,206,250)",
+              },
+              headerTintColor: "white",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+              headerRight: () => {
+                return (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-evenly",
+                    }}
+                  >
+                    <AddTwokButton navigation={navigation} />
+                    <ProfileButton navigation={navigation} />
+                  </View>
+                );
+              },
+            })}
           />
           <Stack.Screen
             name="Profile"
             component={Profile}
-            options={{ title: "Tuo Profilo" }}
+            options={({ navigation }) => ({
+              title: "Profilo",
+              headerStyle: {
+                backgroundColor: "rgb(135,206,250)",
+              },
+              headerTintColor: "white",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+              headerRight: () => {
+                return (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-evenly",
+                    }}
+                  >
+                    <AddTwokButton navigation={navigation} />
+                    <ProfileButton navigation={navigation} />
+                  </View>
+                );
+              },
+            })}
           />
           <Stack.Screen
             name="FollowedUsers"
             component={FollowedUsers}
-            options={{ title: "Utenti Seguiti" }}
+            options={({ navigation }) => ({
+              title: "Utenti Seguiti",
+              headerStyle: {
+                backgroundColor: "rgb(135,206,250)",
+              },
+              headerTintColor: "white",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+              headerRight: () => {
+                return (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-evenly",
+                    }}
+                  >
+                    <AddTwokButton navigation={navigation} />
+                    <ProfileButton navigation={navigation} />
+                  </View>
+                );
+              },
+            })}
           />
         </Stack.Navigator>
       </NavigationContainer>

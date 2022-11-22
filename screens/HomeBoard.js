@@ -20,7 +20,7 @@ const HomeBoard = ({ navigation }) => {
   //array dei twok
   const [data, setData] = useState([]);
   //flag per gestire l'inizio dell'azione di scroll per visualizzare gli indicatori ai bordi
-  const [beginScroll, setBeginScroll] = useState(false);
+  // const [beginScroll, setBeginScroll] = useState(false);
   useEffect(() => {
     if (sid === "") {
       register()
@@ -39,7 +39,7 @@ const HomeBoard = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.twok}>
-        {beginScroll ? <Text>go back ^</Text> : null}
+        {/*  {beginScroll ? <Text>go back ^</Text> : null} */}
         <FlatList
           style={styles.list}
           data={data}
@@ -58,12 +58,12 @@ const HomeBoard = ({ navigation }) => {
           snapToAlignment="start"
           decelerationRate="fast"
           //gestisco l'inizio dello scroll
-          onScrollBeginDrag={() => {
+          /* onScrollBeginDrag={() => {
             setBeginScroll(true);
           }}
           onScrollEndDrag={() => {
             setBeginScroll(false);
-          }}
+          }} */
           onEndReachedThreshold={0.5}
           onEndReached={() => {
             // console.log("chiamo un nuovo Twok");
@@ -71,7 +71,7 @@ const HomeBoard = ({ navigation }) => {
           }}
         />
       </View>
-      {beginScroll ? <Text>load more</Text> : null}
+      {/* {beginScroll ? <Text>load more</Text> : null} */}
     </SafeAreaView>
   );
 };

@@ -33,8 +33,8 @@ const AddTwok = () => {
   const [twok, setTwok] = useState({
     sid: `${user.sid}`,
     text: ``,
-    bgcol: "000000",
-    fontcol: "FFFFFF",
+    bgcol: "FFFFFF",
+    fontcol: "000000",
     fontsize: "1",
     fonttype: "1",
     halign: "1",
@@ -53,7 +53,7 @@ const AddTwok = () => {
   };
 
   return (
-    <View>
+    <View style={{ backgroundColor: "rgb(135,206,250)", height: "100%" }}>
       <TextInput
         style={[
           styles.input,
@@ -68,12 +68,11 @@ const AddTwok = () => {
         ]}
         value={twok.text} //TextTwok
         placeholder="What's Twiking?"
+        placeholderTextColor={`#${twok.fontcol}`}
         onChangeText={(text) => setTwok((obj) => ({ ...obj, text: text }))} //onTwokChange
         multiline={true}
         maxLength={100}
-        autoFocus={true}
       />
-      <Text>AddTwok: {textTwok}</Text>
       <View
         style={{
           flexDirection: "row",
@@ -87,7 +86,11 @@ const AddTwok = () => {
             console.log("cambia colore");
           }}
         >
-          <MaterialCommunityIcons name="format-color-text" size={50} />
+          <MaterialCommunityIcons
+            name="format-color-text"
+            size={50}
+            color={`#${twok.fontcol}`}
+          />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -101,7 +104,11 @@ const AddTwok = () => {
             console.log(twok.halign);
           }}
         >
-          <MaterialCommunityIcons name={iconAlingRow[twok.halign]} size={50} />
+          <MaterialCommunityIcons
+            name={iconAlingRow[twok.halign]}
+            size={50}
+            color="white"
+          />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -112,7 +119,11 @@ const AddTwok = () => {
             console.log(twok.valign);
           }}
         >
-          <MaterialCommunityIcons name={iconAlignCol[twok.valign]} size={50} />
+          <MaterialCommunityIcons
+            name={iconAlignCol[twok.valign]}
+            size={50}
+            color="white"
+          />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -123,7 +134,11 @@ const AddTwok = () => {
             console.log(twok.fontsize);
           }}
         >
-          <MaterialCommunityIcons name="format-size" size={50} />
+          <MaterialCommunityIcons
+            name="format-size"
+            size={50}
+            color={"white"}
+          />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -134,7 +149,7 @@ const AddTwok = () => {
             console.log(twok.fonttype);
           }}
         >
-          <MaterialCommunityIcons name="format-font" size={50} />
+          <MaterialCommunityIcons name="format-font" size={50} color="white" />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -142,7 +157,11 @@ const AddTwok = () => {
             console.log("cambia colore sfondo");
           }}
         >
-          <MaterialCommunityIcons name="format-color-fill" size={50} />
+          <MaterialCommunityIcons
+            name="format-color-fill"
+            size={50}
+            color={`#${twok.bgcol}`}
+          />
         </TouchableOpacity>
       </View>
       {chooseColor == 1 ? (
@@ -151,6 +170,7 @@ const AddTwok = () => {
         <ColorList setColor={SetBgColor} close={SetChooseColor} />
       ) : null}
       <Button
+        color={"#4169E1"}
         title="INVIA"
         onPress={() => {
           console.log("testo: ", twok.text);

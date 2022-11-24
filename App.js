@@ -26,7 +26,7 @@ export default function App() {
             options={({ navigation }) => ({
               title: "Bacheca",
               headerStyle: {
-                backgroundColor: "rgb(135,206,250)",
+                backgroundColor: "#4169E1",
               },
               headerTintColor: "white",
               headerTitleStyle: {
@@ -53,7 +53,7 @@ export default function App() {
             options={({ navigation }) => ({
               title: "Posta Un Twok",
               headerStyle: {
-                backgroundColor: "rgb(135,206,250)",
+                backgroundColor: "#4169E1",
               },
               headerTintColor: "white",
               headerTitleStyle: {
@@ -80,7 +80,7 @@ export default function App() {
             options={({ navigation }) => ({
               title: "Bacheca Utente",
               headerStyle: {
-                backgroundColor: "rgb(135,206,250)",
+                backgroundColor: "#4169E1",
               },
               headerTintColor: "white",
               headerTitleStyle: {
@@ -107,7 +107,7 @@ export default function App() {
             options={({ navigation }) => ({
               title: "Profilo",
               headerStyle: {
-                backgroundColor: "rgb(135,206,250)",
+                backgroundColor: "#4169E1",
               },
               headerTintColor: "white",
               headerTitleStyle: {
@@ -134,7 +134,7 @@ export default function App() {
             options={({ navigation }) => ({
               title: "Utenti Seguiti",
               headerStyle: {
-                backgroundColor: "rgb(135,206,250)",
+                backgroundColor: "#4169E1",
               },
               headerTintColor: "white",
               headerTitleStyle: {
@@ -169,3 +169,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+//installazioni: AsyncStorage, ReactNavigation, Expo ImagePicker

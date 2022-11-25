@@ -17,7 +17,7 @@ const Twok = ({ item, sid, auts, onLoadPicture, navigation }) => {
   const { user, setUser } = useContext(UserContext);
   const [picture, SetPicture] = useState();
   const [loader, SetLoader] = useState(false);
-  const size = [20, 30, 50];
+  const size = [10, 20, 35];
   const align = ["flex-start", "center", "flex-end"];
   const fonttype = ["normal", "monospace", "serif"];
 
@@ -25,8 +25,7 @@ const Twok = ({ item, sid, auts, onLoadPicture, navigation }) => {
     getPicture(sid, item.uid)
       .then((response) => {
         auts.has(item.uid)
-          ? //console.log("Immagine già salvata")
-            null
+          ? null
           : onLoadPicture(auts.set(item.uid, response.picture));
         SetLoader(false);
       })

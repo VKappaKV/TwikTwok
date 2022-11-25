@@ -32,11 +32,23 @@ const getProfile = async (sid) => {
 };
 
 const setProfile = async (sid, name, picture) => {
-  return await RequestHandler("setProfile", {
-    sid: sid,
-    name: name,
-    picture: picture,
-  });
+  let retFunction;
+  name
+    ? picture
+      ? (retFunction = await RequestHandler("setProfile", {
+          sid: sid,
+          name: name,
+          picture: picture,
+        }))
+      : (retFunction = await RequestHandler("setProfile", {
+          sid: sid,
+          name: name,
+        }))
+    : (retFunction = await RequestHandler("setProfile", {
+        sid: sid,
+        picture: picture,
+      }));
+  return retFunction;
 };
 
 const getTwok = async (sid, uid, tid) => {

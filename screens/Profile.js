@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { getProfile, setProfile } from "../utility/ComunicationHandler";
 import UserContext from "../utility/Context";
@@ -17,8 +17,20 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 const Profile = ({ navigation }) => {
   const { user } = useContext(UserContext);
   const sid = user.sid;
+  const [oldname, SetOldName] = useState();
+  const [pfp, SetPfp] = useState(null);
   const [name, onNameChange] = useState();
   const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    getProfile(sid)
+      .then((response) => {
+        SetOldName(response.name);
+        SetPfp(response.picture);
+        onNameChange(response.name);
+      })
+      .catch((e) => console.log("Errore nel fetch del profilo", e));
+  }, []);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -56,15 +68,10 @@ const Profile = ({ navigation }) => {
         }}
         onPress={pickImage}
       >
-        <Text
-          style={{
-            textAlign: "center",
-            textAlignVertical: "center",
-            color: "white",
-          }}
-        >
-          Set Picture
-        </Text>
+        <Image
+          source={{ uri: "data:image/png;base64," + pfp }}
+          style={{ width: 50, height: 50 }}
+        />
         <MaterialCommunityIcons
           name="account-edit"
           size={40}
@@ -86,13 +93,36 @@ const Profile = ({ navigation }) => {
         <Button
           title="Save Profile Changes"
           color={"green"}
-          onPress={() =>
-            setProfile(sid, name, image).then(() =>
-              getProfile(sid)
-                .then((response) => console.log(response))
-                .then(setImage(null))
-            )
-          }
+          onPress={() => {
+            image
+              ? name != oldname
+                ? setProfile(sid, name, image).then(() =>
+                    getProfile(sid)
+                      .then((response) => {
+                        console.log(response);
+                        SetPfp(response.picture);
+                      })
+                      .then(setImage(null))
+                  )
+                : setProfile(sid, null, image).then(() =>
+                    getProfile(sid)
+                      .then((response) => {
+                        console.log(response);
+                        SetPfp(response.picture);
+                      })
+                      .then(setImage(null))
+                  )
+              : setProfile(sid, name).then(() =>
+                  getProfile(sid).then((response) =>
+                    console.log(
+                      "senza pic",
+                      response.name,
+                      response.uid,
+                      response.pversion
+                    )
+                  )
+                );
+          }}
         />
         <Button
           color={"rgb(135,206,250)"}

@@ -15,10 +15,9 @@ import ColorList from "../components/ColorList";
 const AddTwok = () => {
   const { user } = useContext(UserContext);
   const [chooseColor, SetChooseColor] = useState(0);
-  const [textTwok, onTwokChange] = useState();
   const alignRow = ["left", "center", "right"];
   const alignCol = ["top", "center", "bottom"];
-  const size = [20, 30, 50];
+  const size = [10, 20, 35];
   const fonttype = ["normal", "monospace", "serif"];
   const iconAlingRow = [
     "format-align-left",

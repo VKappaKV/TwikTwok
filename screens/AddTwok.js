@@ -11,6 +11,7 @@ import { addTwok } from "../utility/ComunicationHandler";
 import UserContext from "../utility/Context";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ColorList from "../components/ColorList";
+import * as Location from "expo-location";
 
 const AddTwok = () => {
   const { user } = useContext(UserContext);
@@ -49,6 +50,26 @@ const AddTwok = () => {
     console.log("IMPOSTO IL NUOVO BACKGROUND: ", newColor),
       setTwok((c) => ({ ...c, bgcol: `${newColor}` }));
     console.log(twok);
+  };
+
+  const getPositionAsync = async () => {
+    let canUseLocation = false;
+    const grantedPermission = await Location.getForegroundPermissionsAsync();
+    if (grantedPermission.status === "granted") {
+      canUseLocation = true;
+    } else {
+      const permissionResponse =
+        await Location.requestForegroundPermissionsAsync();
+      if (permissionResponse.status === "granted") {
+        canUseLocation = true;
+      }
+    }
+    if (canUseLocation) {
+      const location = await Location.getCurrentPositionAsync();
+      console.log("received location:", location);
+      setTwok((c) => ({ ...c, lat: location.coords.latitude }));
+      setTwok((c) => ({ ...c, lon: location.coords.longitude }));
+    }
   };
 
   return (
@@ -160,6 +181,13 @@ const AddTwok = () => {
             name="format-color-fill"
             size={50}
             color={`#${twok.bgcol}`}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={getPositionAsync}>
+          <MaterialCommunityIcons
+            name="map-marker-radius"
+            size={50}
+            color="white"
           />
         </TouchableOpacity>
       </View>

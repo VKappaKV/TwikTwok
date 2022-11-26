@@ -31,8 +31,6 @@ const FollowedUsers = () => {
           justifyContent: "center",
           alignSelf: "center",
           alignItems: "center",
-          height: "100%",
-          width: "100%",
         }}
         style={styles.list}
         data={data}
@@ -45,7 +43,7 @@ const FollowedUsers = () => {
 
 const Follower = ({ item }) => {
   return (
-    <View>
+    <View style={{ width: 300, backgroundColor: "green" }}>
       <TouchableOpacity onPress={() => console.log(item)}>
         <Text>name: {item.name}</Text>
         <Text>pversion: {item.pversion}</Text>

@@ -171,3 +171,5 @@ const styles = StyleSheet.create({
 });
 
 //installazioni: AsyncStorage, ReactNavigation, Expo ImagePicker
+// Per mostrare la mappa npx expo install react-native-maps
+// Per ottenere la posizione: npx expo install expo-location

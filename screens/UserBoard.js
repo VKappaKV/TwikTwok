@@ -91,13 +91,18 @@ const UserBoard = ({ navigation }) => {
       >
         {!userIsFollowed ? (
           <TouchableOpacity
+            style={{ backgroundColor: "black" }}
             onPress={() => {
               follow(user.sid, user.selectedUser).then(() =>
                 handleFollowChange()
               );
             }}
           >
-            <MaterialCommunityIcons name="account-plus" size={50} />
+            <MaterialCommunityIcons
+              name="account-plus"
+              size={50}
+              color="white"
+            />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity

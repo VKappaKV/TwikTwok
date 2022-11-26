@@ -32,22 +32,22 @@ const getProfile = async (sid) => {
 };
 
 const setProfile = async (sid, name, picture) => {
-  let retFunction;
-  name
-    ? picture
-      ? (retFunction = await RequestHandler("setProfile", {
-          sid: sid,
-          name: name,
-          picture: picture,
-        }))
-      : (retFunction = await RequestHandler("setProfile", {
-          sid: sid,
-          name: name,
-        }))
-    : (retFunction = await RequestHandler("setProfile", {
-        sid: sid,
-        picture: picture,
-      }));
+  let retFunction = await RequestHandler("setProfile", {
+    sid: sid,
+    name: name,
+    picture: picture,
+  });
+  name ??
+    (retFunction = await RequestHandler("setProfile", {
+      sid: sid,
+      picture: picture,
+    }));
+  picture ??
+    (retFunction = await RequestHandler("setProfile", {
+      sid: sid,
+      name: name,
+    }));
+
   return retFunction;
 };
 

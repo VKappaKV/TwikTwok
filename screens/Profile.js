@@ -57,7 +57,9 @@ const Profile = ({ navigation }) => {
         placeholderTextColor={"white"}
         onChangeText={onNameChange}
       />
-      <Text style={{ color: "rgb(135,206,250)" }}>{name}</Text>
+      <Text style={{ alignSelf: "center", color: "rgb(135,206,250)" }}>
+        {name}
+      </Text>
 
       <TouchableOpacity
         style={{
@@ -81,7 +83,7 @@ const Profile = ({ navigation }) => {
       {image && (
         <Image
           source={{ uri: "data:image/png;base64," + image }}
-          style={{ width: 200, height: 200 }}
+          style={{ width: 100, height: 100, alignSelf: "center" }}
         />
       )}
       <View

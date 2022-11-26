@@ -68,16 +68,35 @@ const Twok = ({ item, sid, auts, onLoadPicture, navigation }) => {
             <Text style={{ color: `#${item.fontcol}` }}>{item.name}</Text>
           </TouchableOpacity>
         </View>
-        <Text
-          style={{
-            fontSize: size[item.fontsize],
-            color: `#${item.fontcol}`,
-            fontWeight: "700",
-            fontFamily: fonttype[item.fonttype],
-          }}
+        <TouchableOpacity
+          onPress={() =>
+            console.log(
+              "Apriti sesamo: [lat: ",
+              item.lat,
+              " | lon: ",
+              item.lon,
+              "]"
+            )
+          }
         >
-          {item.text}
-        </Text>
+          <Text
+            style={{
+              fontSize: size[item.fontsize],
+              color: `#${item.fontcol}`,
+              fontWeight: "700",
+              fontFamily: fonttype[item.fonttype],
+            }}
+          >
+            {item.text}
+          </Text>
+          {item.lat && (
+            <MaterialCommunityIcons
+              name="map-marker-radius"
+              color={`#${item.fontcol}`}
+              size={size[item.fontsize]}
+            />
+          )}
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

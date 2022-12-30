@@ -4,7 +4,7 @@ const UserContext = createContext({});
 
 export const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState({
-    sid: "L78v5Mv8vMdY620Vo0rP",
+    sid: "",
     selectedUser: "",
   });
   return (
@@ -15,3 +15,4 @@ export const UserContextProvider = ({ children }) => {
 };
 
 export default UserContext;
+/* twoker: L78v5Mv8vMdY620Vo0rP */

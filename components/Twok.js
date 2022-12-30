@@ -4,34 +4,86 @@ import {
   View,
   Dimensions,
   Image,
-  Button,
   TouchableOpacity,
   SafeAreaView,
+  BackHandler,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { getPicture } from "../utility/ComunicationHandler";
 import UserContext from "../utility/Context";
+import MapView, { Marker } from "react-native-maps";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  getAllUsers,
+  getUser,
+  insertUser,
+  updatePicture,
+} from "../utility/StorageHandler";
 
 const Twok = ({ item, sid, auts, onLoadPicture, navigation }) => {
   const { user, setUser } = useContext(UserContext);
   const [picture, SetPicture] = useState();
   const [loader, SetLoader] = useState(false);
+  const [mapOnDisplay, SetMapOnDisplay] = useState(false);
   const size = [10, 20, 35];
   const align = ["flex-start", "center", "flex-end"];
   const fonttype = ["normal", "monospace", "serif"];
 
   useEffect(() => {
-    getPicture(sid, item.uid)
-      .then((response) => {
-        auts.has(item.uid)
-          ? null
-          : onLoadPicture(auts.set(item.uid, response.picture));
-        SetLoader(false);
-      })
-      .then(() => SetPicture(auts.get(item.uid)))
-      .catch((e) => console.log("[ERRORE FETCH PICTURE]", e));
+    if (item.pversion == 0) return;
+
+    getUser(item.uid).then((response) => {
+      if (response == null) {
+        console.log("NON ho questo utente nel db: ", item.uid, item.name);
+        getPicture(sid, item.uid)
+          .then((response) => {
+            insertUser(item.uid, response.picture, response.pversion);
+            SetPicture(response.picture);
+            SetLoader(false);
+          })
+          .catch((e) => console.log(e));
+      } else {
+        getUser(item.uid).then((user) => {
+          console.log(
+            "ho questo utente nel db: ",
+            user.pversion,
+            "la pversion è: ",
+            item.pversion,
+            " ",
+            user.uid,
+            item.name
+          );
+          if (user.pversion != item.pversion) {
+            getPicture(sid, item.uid)
+              .then((response) => {
+                updatePicture(item.uid, response.picture, response.pversion);
+                SetPicture(response.picture);
+                SetLoader(false);
+                console.log(picture);
+              })
+              .catch((e) => console.log(e));
+          } else {
+            getUser(item.uid).then((response) => {
+              SetPicture(response.picture);
+            });
+          }
+        });
+      }
+    });
+    SetLoader(false);
   }, []);
+
+  const handleRegionChanged = (region) => {
+    console.log(region);
+  };
+  BackHandler.addEventListener("hardwareBackPress", () => {
+    SetMapOnDisplay(false);
+    return true;
+  });
+  const OpenMap = () => {
+    console.log("Apriti sesamo: [lat: ", item.lat, " | lon: ", item.lon, "]");
+    SetMapOnDisplay(true);
+  };
 
   return (
     <SafeAreaView
@@ -61,24 +113,14 @@ const Twok = ({ item, sid, auts, onLoadPicture, navigation }) => {
               />
             ) : (
               <Image
-                source={{ uri: "data:image/png;base64," + auts.get(item.uid) }}
+                source={{ uri: "data:image/png;base64," + picture }}
                 style={{ width: 80, height: 80 }}
               />
             )}
             <Text style={{ color: `#${item.fontcol}` }}>{item.name}</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          onPress={() =>
-            console.log(
-              "Apriti sesamo: [lat: ",
-              item.lat,
-              " | lon: ",
-              item.lon,
-              "]"
-            )
-          }
-        >
+        <TouchableOpacity onPress={OpenMap}>
           <Text
             style={{
               fontSize: size[item.fontsize],
@@ -98,15 +140,32 @@ const Twok = ({ item, sid, auts, onLoadPicture, navigation }) => {
           )}
         </TouchableOpacity>
       </View>
+      {mapOnDisplay ? (
+        <MapView
+          style={styles.map}
+          onRegionChange={handleRegionChanged}
+          initialRegion={{
+            latitude: item.lat,
+            longitude: item.lon,
+            latitudeDelta: 1,
+            longitudeDelta: 1,
+          }}
+        >
+          <Marker
+            coordinate={{ latitude: item.lat, longitude: item.lon }}
+            title="prova"
+            description="descrizione"
+          />
+        </MapView>
+      ) : null}
     </SafeAreaView>
   );
 };
 
 export { Twok };
-/* 
-const styles = StyleSheet.create({});
 
-<Button
-title={`Go to ${item.name} profile`}
-onPress={() => navigation.navigate("UserBoard")}
-/> */
+const styles = StyleSheet.create({
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
+});

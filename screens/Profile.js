@@ -58,7 +58,7 @@ const Profile = ({ navigation }) => {
         onChangeText={onNameChange}
       />
       <Text style={{ alignSelf: "center", color: "rgb(135,206,250)" }}>
-        {name}
+        CURRENT NAME: {name}
       </Text>
 
       <TouchableOpacity

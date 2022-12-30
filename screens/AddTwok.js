@@ -35,10 +35,10 @@ const AddTwok = () => {
     text: ``,
     bgcol: "FFFFFF",
     fontcol: "000000",
-    fontsize: "1",
-    fonttype: "1",
-    halign: "1",
-    valign: "1",
+    fontsize: 1,
+    fonttype: 1,
+    halign: 1,
+    valign: 1,
     lat: "",
     lon: "",
   });
@@ -118,9 +118,9 @@ const AddTwok = () => {
               "sposta allineamento orizzontale",
               alignRow[twok.halign]
             );
-            let r = parseInt(twok.halign) + 1;
+            let r = twok.halign + 1;
             if (r > 2) r = 0;
-            setTwok((t) => ({ ...t, halign: `${r}` }));
+            setTwok((t) => ({ ...t, halign: r }));
             console.log(twok.halign);
           }}
         >
@@ -133,9 +133,9 @@ const AddTwok = () => {
         <TouchableOpacity
           onPress={() => {
             console.log("sposta allineamento verticale", alignCol[twok.valign]);
-            let r = parseInt(twok.valign) + 1;
+            let r = twok.valign + 1;
             if (r > 2) r = 0;
-            setTwok((t) => ({ ...t, valign: `${r}` }));
+            setTwok((t) => ({ ...t, valign: r }));
             console.log(twok.valign);
           }}
         >
@@ -148,9 +148,9 @@ const AddTwok = () => {
         <TouchableOpacity
           onPress={() => {
             console.log("cambia grandezza font", size[twok.fontsize]);
-            let r = parseInt(twok.fontsize) + 1;
+            let r = twok.fontsize + 1;
             if (r > 2) r = 0;
-            setTwok((t) => ({ ...t, fontsize: `${r}` }));
+            setTwok((t) => ({ ...t, fontsize: r }));
             console.log(twok.fontsize);
           }}
         >
@@ -163,9 +163,9 @@ const AddTwok = () => {
         <TouchableOpacity
           onPress={() => {
             console.log("cambia font", fonttype[twok.fonttype]);
-            let r = parseInt(twok.fonttype) + 1;
+            let r = twok.fonttype + 1;
             if (r > 2) r = 0;
-            setTwok((t) => ({ ...t, fonttype: `${r}` }));
+            setTwok((t) => ({ ...t, fonttype: r }));
             console.log(twok.fonttype);
           }}
         >

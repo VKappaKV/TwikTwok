@@ -1,11 +1,19 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  Dimensions,
+} from "react-native";
 import React, { useContext, useEffect, useState } from "react";
-import { getFollowed } from "../utility/ComunicationHandler";
+import { getFollowed, getPicture } from "../utility/ComunicationHandler";
 import UserContext from "../utility/Context";
 import { FlatList } from "react-native-gesture-handler";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const FollowedUsers = () => {
-  const { user } = useContext(UserContext);
+const FollowedUsers = ({ navigation }) => {
+  const { user, setUser } = useContext(UserContext);
   const [data, setData] = useState();
   useEffect(() => {
     handleGetFollowed().then(() =>
@@ -21,7 +29,12 @@ const FollowedUsers = () => {
   };
 
   const RenderItem = ({ item }) => (
-    <Follower style={styles.profile} item={item} />
+    <Follower
+      style={styles.profile}
+      item={item}
+      nav={navigation}
+      setID={setUser}
+    />
   );
 
   return (
@@ -41,13 +54,42 @@ const FollowedUsers = () => {
   );
 };
 
-const Follower = ({ item }) => {
+const Follower = ({ item, nav, setID }) => {
+  const { user } = useContext(UserContext);
+  const [pfp, onPictureLoad] = useState();
+  useEffect(() => {
+    getPicture(user.sid, item.uid)
+      .then((response) => onPictureLoad(response.picture))
+      .catch((e) => console.log(e))
+      .finally((sm) => console.log(sm));
+  }, []);
   return (
-    <View style={{ width: 300, backgroundColor: "green" }}>
-      <TouchableOpacity onPress={() => console.log(item)}>
-        <Text>name: {item.name}</Text>
-        <Text>pversion: {item.pversion}</Text>
-        <Text>uid: {item.uid}</Text>
+    <View
+      style={{
+        width: Dimensions.get("window").width,
+        backgroundColor: "#6495ED",
+      }}
+    >
+      <TouchableOpacity
+        style={{ flexDirection: "row" }}
+        onPress={() => {
+          setID((p) => ({ ...p, selectedUser: item.uid }));
+          nav.navigate("UserBoard");
+        }}
+      >
+        {pfp ? (
+          <Image
+            source={{ uri: "data:image/png;base64," + pfp }}
+            style={{ width: 50, height: 50 }}
+          />
+        ) : (
+          <MaterialCommunityIcons
+            name="account-circle"
+            color={`white`}
+            size={50}
+          />
+        )}
+        <Text style={{ textTransform: "uppercase" }}>{item.name}</Text>
       </TouchableOpacity>
     </View>
   );

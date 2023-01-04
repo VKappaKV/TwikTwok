@@ -17,6 +17,7 @@ const HomeBoard = ({ navigation }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    console.log("[HOMEBOARD]: MOUNTING");
     try {
       // Use the async keyword to indicate that this is an asynchronous function
       async function getData() {

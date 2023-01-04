@@ -13,12 +13,8 @@ import { getPicture } from "../utility/ComunicationHandler";
 import UserContext from "../utility/Context";
 import MapView, { Marker } from "react-native-maps";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import {
-  getAllUsers,
-  getUser,
-  insertUser,
-  updatePicture,
-} from "../utility/StorageHandler";
+import { getUser, insertUser, updatePicture } from "../utility/StorageHandler";
+import FollowedUsers from "../screens/FollowedUsers";
 
 const Twok = ({ item, sid, auts, onLoadPicture, navigation }) => {
   const { user, setUser } = useContext(UserContext);
@@ -30,6 +26,7 @@ const Twok = ({ item, sid, auts, onLoadPicture, navigation }) => {
   const fonttype = ["normal", "monospace", "serif"];
 
   useEffect(() => {
+    console.log("[TWOK]: MOUNTING");
     if (item.pversion == 0) return;
 
     getUser(item.uid).then((response) => {

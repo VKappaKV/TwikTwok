@@ -26,6 +26,7 @@ const UserBoard = ({ navigation }) => {
   const [userIsFollowed, onFollowChange] = useState();
 
   useEffect(() => {
+    console.log("[BACHECA USER]: MOUNTING");
     handleGetTwok()
       .then((twok) => console.log(twok))
       .catch((e) => console.log("ERRORE IN [HandleGetTwok]: ", e));

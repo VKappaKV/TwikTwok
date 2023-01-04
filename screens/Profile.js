@@ -43,6 +43,10 @@ const Profile = ({ navigation }) => {
     });
 
     console.log(result);
+    if (result.assets[0].base64.length >= 137_000) {
+      alert("immagine troppo grande");
+      return;
+    }
 
     if (!result.canceled) {
       setImage(result.assets[0].base64);
@@ -105,6 +109,7 @@ const Profile = ({ navigation }) => {
                         SetPfp(response.picture);
                       })
                       .then(setImage(null))
+                      .catch((error) => console.log(error))
                   )
                 : setProfile(sid, null, image).then(() =>
                     getProfile(sid)

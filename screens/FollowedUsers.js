@@ -60,8 +60,8 @@ const Follower = ({ item, nav, setID }) => {
   useEffect(() => {
     getPicture(user.sid, item.uid)
       .then((response) => onPictureLoad(response.picture))
-      .catch((e) => console.log(e))
-      .finally((sm) => console.log(sm));
+      .catch((e) => console.log("the picture is", e))
+      .finally((sm) => console.log("finally", sm));
   }, []);
   return (
     <View

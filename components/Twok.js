@@ -14,9 +14,8 @@ import UserContext from "../utility/Context";
 import MapView, { Marker } from "react-native-maps";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { getUser, insertUser, updatePicture } from "../utility/StorageHandler";
-import FollowedUsers from "../screens/FollowedUsers";
 
-const Twok = ({ item, sid, auts, onLoadPicture, navigation }) => {
+const Twok = ({ item, sid, navigation }) => {
   const { user, setUser } = useContext(UserContext);
   const [picture, SetPicture] = useState();
   const [loader, SetLoader] = useState(false);
@@ -78,6 +77,7 @@ const Twok = ({ item, sid, auts, onLoadPicture, navigation }) => {
     return true;
   });
   const OpenMap = () => {
+    console.log(item);
     console.log("Apriti sesamo: [lat: ", item.lat, " | lon: ", item.lon, "]");
     SetMapOnDisplay(true);
   };

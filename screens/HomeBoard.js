@@ -11,8 +11,6 @@ import { createTable } from "../utility/StorageHandler";
 const HomeBoard = ({ navigation }) => {
   const [loading, Setloading] = useState(true);
   const { user, setUser } = useContext(UserContext);
-  //Mappa Autori Twok con le loro PFP
-  const [mapAut, SetmapAut] = useState(new Map());
   //array dei twok
   const [data, setData] = useState([]);
 
@@ -87,13 +85,7 @@ const HomeBoard = ({ navigation }) => {
             style={styles.list}
             data={data}
             renderItem={({ item }) => (
-              <Twok
-                sid={user.sid}
-                item={item}
-                auts={mapAut}
-                onLoadPicture={SetmapAut}
-                navigation={navigation}
-              />
+              <Twok sid={user.sid} item={item} navigation={navigation} />
             )}
             keyExtractor={data.tid}
             snapToInterval={Dimensions.get("window").height}

@@ -21,7 +21,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 const UserBoard = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
   const sid = user.sid;
-  const [mapAut, SetmapAut] = useState(new Map());
   const [data, setData] = useState([]);
   const [userIsFollowed, onFollowChange] = useState();
 
@@ -60,13 +59,7 @@ const UserBoard = ({ navigation }) => {
           style={styles.list}
           data={data}
           renderItem={({ item }) => (
-            <Twok
-              sid={sid}
-              item={item}
-              auts={mapAut}
-              onLoadPicture={SetmapAut}
-              navigation={navigation}
-            />
+            <Twok sid={sid} item={item} navigation={navigation} />
           )}
           keyExtractor={data.tid}
           //effetto di scrolling magnetico

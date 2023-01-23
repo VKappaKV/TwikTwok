@@ -16,7 +16,7 @@ const FollowedUsers = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
   const [data, setData] = useState();
   useEffect(() => {
-    handleGetFollowed().then(() =>
+    handleGetFollowed().then((data) =>
       console.log("VISUALIZZIAMO LA LISTA ", data, "OKOKOKOKOK")
     );
   }, []);
@@ -60,8 +60,7 @@ const Follower = ({ item, nav, setID }) => {
   useEffect(() => {
     getPicture(user.sid, item.uid)
       .then((response) => onPictureLoad(response.picture))
-      .catch((e) => console.log("the picture is", e))
-      .finally((sm) => console.log("finally", sm));
+      .catch((e) => console.log("the picture is", e));
   }, []);
   return (
     <View

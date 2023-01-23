@@ -5,13 +5,9 @@ import HomeBoard from "./screens/HomeBoard";
 import AddTwok from "./screens/AddTwok";
 import Profile from "./screens/Profile";
 import FollowedUsers from "./screens/FollowedUsers";
-import UserContext, { UserContextProvider } from "./utility/Context";
+import { UserContextProvider } from "./utility/Context";
 import { AddTwokButton, ProfileButton } from "./components/HeaderButtons";
 import UserBoard from "./screens/UserBoard";
-import { useContext, useEffect } from "react";
-//aggiungere Icone
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { register } from "./utility/ComunicationHandler";
 
 const Stack = createNativeStackNavigator();
 

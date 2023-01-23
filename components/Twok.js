@@ -41,11 +41,11 @@ const Twok = ({ item, sid, navigation }) => {
       } else {
         getUser(item.uid).then((user) => {
           console.log(
-            "ho questo utente nel db: ",
+            "[USER]ho questo utente nel db: ",
             user.pversion,
             "la pversion è: ",
             item.pversion,
-            " ",
+            "uid: ",
             user.uid,
             item.name
           );

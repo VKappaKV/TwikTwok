@@ -7,6 +7,7 @@ import { FlatList } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createTable } from "../utility/StorageHandler";
+import { handleTestTwok } from "../utility/testing/tests";
 
 const HomeBoard = ({ navigation }) => {
   const [loading, Setloading] = useState(true);
@@ -36,6 +37,8 @@ const HomeBoard = ({ navigation }) => {
         // Retrieve the twok value from the server
         const twok = await handleGetTwok();
         console.log(twok);
+
+        handleTestTwok().catch((f) => console.log("chiudo qui per ", f));
       }
 
       // Call the getData function to start the async operations

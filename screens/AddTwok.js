@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   StyleSheet,
   Text,
@@ -13,7 +14,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ColorList from "../components/ColorList";
 import * as Location from "expo-location";
 
-const AddTwok = () => {
+const AddTwok = ({ navigation }) => {
   const { user } = useContext(UserContext);
   const [chooseColor, SetChooseColor] = useState(0);
   const alignRow = ["left", "center", "right"];
@@ -57,15 +58,21 @@ const AddTwok = () => {
     const grantedPermission = await Location.getForegroundPermissionsAsync();
     if (grantedPermission.status === "granted") {
       canUseLocation = true;
+      console.log("entrato qui GRANTED");
     } else {
+      console.log("entrato qui NOT GRANTED");
       const permissionResponse =
         await Location.requestForegroundPermissionsAsync();
       if (permissionResponse.status === "granted") {
         canUseLocation = true;
+        console.log("entrato qui GRANTED DA QUALCHE PARTE");
       }
     }
+    console.log("posso usare la posizione? ", canUseLocation);
     if (canUseLocation) {
-      const location = await Location.getCurrentPositionAsync();
+      const location = await Location.getCurrentPositionAsync().catch((e) =>
+        console.log("errore qui: ", e)
+      );
       console.log("received location:", location);
       setTwok((c) => ({ ...c, lat: location.coords.latitude }));
       setTwok((c) => ({ ...c, lon: location.coords.longitude }));
@@ -211,10 +218,15 @@ const AddTwok = () => {
             twok.halign,
             twok.valign
           )
-            .then((response) =>
-              console.log("{Aggiunta Twok}: ", twok, "[RISPOSTA]: ", response)
-            )
-            .catch((e) => console.log(e, "il twok è: ", twok));
+            .then((response) => {
+              console.log("{Aggiunta Twok}: ", twok, "[RISPOSTA]: ", response);
+              alert("Twok inviato");
+              navigation.navigate("Home");
+            })
+            .catch((e) => {
+              console.log(e, "il twok è: ", twok);
+              alert("twok errato");
+            });
         }}
       />
     </View>

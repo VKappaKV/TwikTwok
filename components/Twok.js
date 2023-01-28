@@ -37,9 +37,10 @@ const Twok = ({ item, sid, navigation }) => {
             SetPicture(response.picture);
             SetLoader(false);
           })
-          .catch((e) => console.log(e));
+          .catch((e) => console.log("errore: ", e));
       } else {
         getUser(item.uid).then((user) => {
+          console.log("[utente: ]", user.pversion, user.uid);
           console.log(
             "[USER]ho questo utente nel db: ",
             user.pversion,
@@ -55,9 +56,9 @@ const Twok = ({ item, sid, navigation }) => {
                 updatePicture(item.uid, response.picture, response.pversion);
                 SetPicture(response.picture);
                 SetLoader(false);
-                console.log(picture);
+                console.log("questa è l'immagine: ", picture);
               })
-              .catch((e) => console.log(e));
+              .catch((e) => console.log("errore", e));
           } else {
             getUser(item.uid).then((response) => {
               SetPicture(response.picture);
@@ -70,14 +71,14 @@ const Twok = ({ item, sid, navigation }) => {
   }, []);
 
   const handleRegionChanged = (region) => {
-    console.log(region);
+    console.log("region: ", region);
   };
   BackHandler.addEventListener("hardwareBackPress", () => {
     SetMapOnDisplay(false);
     return true;
   });
   const OpenMap = () => {
-    console.log(item);
+    console.log("[twok item: ]", item);
     console.log("Apriti sesamo: [lat: ", item.lat, " | lon: ", item.lon, "]");
     SetMapOnDisplay(true);
   };

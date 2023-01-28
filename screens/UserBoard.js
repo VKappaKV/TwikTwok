@@ -75,7 +75,6 @@ const UserBoard = ({ navigation }) => {
       </View>
       <View
         style={{
-          flexDirection: "row",
           position: "absolute",
           alignItems: "center",
           justifyContent: "center",

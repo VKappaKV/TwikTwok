@@ -23,9 +23,16 @@ const Twok = ({ item, sid, navigation }) => {
   const size = [10, 20, 35];
   const align = ["flex-start", "center", "flex-end"];
   const fonttype = ["normal", "monospace", "serif"];
+  const [dummyTwok, SetTwokInvalid] = useState(false);
 
   useEffect(() => {
     console.log("[TWOK]: MOUNTING");
+
+    if (!item) {
+      SetTwokInvalid(true);
+      return;
+    }
+
     if (item.pversion == 0) return;
 
     getUser(item.uid).then((response) => {

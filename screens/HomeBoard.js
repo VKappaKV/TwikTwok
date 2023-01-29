@@ -7,7 +7,7 @@ import { FlatList } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createTable } from "../utility/StorageHandler";
-import { handleTestTwok } from "../utility/testing/tests";
+import { checkTwokParameteres } from "../utility/testing/tests";
 
 const HomeBoard = ({ navigation }) => {
   const [loading, Setloading] = useState(true);
@@ -23,7 +23,7 @@ const HomeBoard = ({ navigation }) => {
         // Use the await keyword to wait for the getSid function to resolve
         const sid = await getSid();
         // Set the sid value in the user object
-        setUser((user) => ({ ...user, sid }));
+        setUser((user) => ({ ...user, sid: sid }));
 
         // If the sid is empty, log the user in and store the new sid value
         if (sid === "" || sid === null) {
@@ -37,8 +37,12 @@ const HomeBoard = ({ navigation }) => {
         // Retrieve the twok value from the server
         const twok = await handleGetTwok();
         console.log(twok);
-
-        handleTestTwok().catch((f) => console.log("chiudo qui per ", f));
+        // Retrieve the twoks list for the tested tids
+        /*    const testing_twoks = await handleTestTwok().catch((f) =>
+          console.log("chiudo qui per ", f)
+        );
+        console.log("[TESTING TWOKS] :", testing_twoks);
+        setData((existingData) => [...existingData, testing_twoks]); */
       }
 
       // Call the getData function to start the async operations
@@ -49,12 +53,27 @@ const HomeBoard = ({ navigation }) => {
   }, []);
 
   const handleGetTwok = async () => {
+    //preparo la variabile response
+    let response;
     /*     console.log("faccio la richiesta con questo sid: ", user.sid); */
     const sid = await getSid();
     setUser((user) => ({ ...user, sid }));
     /*  console.log("check sid: ", sid, "il sid nel Context è: ", user.sid); */
-    const response = await getTwok(sid);
-    setData((existingData) => [...existingData, response]);
+    if (user.tidSequence === -1) {
+      response = await getTwok(sid);
+      const fetchedTwok = checkTwokParameteres(response);
+      setData((existingData) => [...existingData, fetchedTwok]);
+    } else {
+      response = await getTwok(sid, null, user.tidSequence).catch((e) => {
+        console.log("errore", e);
+        console.log(data);
+        alert("ERROR DURING TWOK FETCHING...DEPLOYING DUMMY TWOK");
+        setUser((user) => ({ ...user, tidSequence: user.tidSequence + 1 }));
+      });
+      const fetchedTwok = checkTwokParameteres(response);
+      setUser((user) => ({ ...user, tidSequence: user.tidSequence + 1 }));
+      setData((existingData) => [...existingData, fetchedTwok]);
+    }
     return response;
   };
 

@@ -44,7 +44,7 @@ const Profile = ({ navigation }) => {
 
     console.log(result);
     if (result.assets[0].base64.length >= 137_000) {
-      alert("immagine troppo grande");
+      alert("PICTURE TOO BIG, MAX 100KB");
       return;
     }
 
@@ -60,6 +60,7 @@ const Profile = ({ navigation }) => {
         placeholder="SET YOUR NAME"
         placeholderTextColor={"white"}
         onChangeText={onNameChange}
+        maxLength={20}
       />
       <Text style={{ alignSelf: "center", color: "rgb(135,206,250)" }}>
         CURRENT NAME: {name}

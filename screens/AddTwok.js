@@ -220,12 +220,12 @@ const AddTwok = ({ navigation }) => {
           )
             .then((response) => {
               console.log("{Aggiunta Twok}: ", twok, "[RISPOSTA]: ", response);
-              alert("Twok inviato");
+              alert("TWOK SENT :) ");
               navigation.navigate("Home");
             })
             .catch((e) => {
               console.log(e, "il twok è: ", twok);
-              alert("twok errato");
+              alert("BAD TWOK :< ");
             });
         }}
       />

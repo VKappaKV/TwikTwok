@@ -1,5 +1,4 @@
 import {
-  Alert,
   Button,
   StyleSheet,
   Text,
@@ -16,6 +15,7 @@ import * as Location from "expo-location";
 
 const AddTwok = ({ navigation }) => {
   const { user } = useContext(UserContext);
+  const [loadingPosition, OnPositionLoaded] = useState(false);
   const [chooseColor, SetChooseColor] = useState(0);
   const alignRow = ["left", "center", "right"];
   const alignCol = ["top", "center", "bottom"];
@@ -54,6 +54,7 @@ const AddTwok = ({ navigation }) => {
   };
 
   const getPositionAsync = async () => {
+    OnPositionLoaded(true);
     let canUseLocation = false;
     const grantedPermission = await Location.getForegroundPermissionsAsync();
     if (grantedPermission.status === "granted") {
@@ -70,9 +71,11 @@ const AddTwok = ({ navigation }) => {
     }
     console.log("posso usare la posizione? ", canUseLocation);
     if (canUseLocation) {
-      const location = await Location.getCurrentPositionAsync().catch((e) =>
-        console.log("errore qui: ", e)
-      );
+      const location = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Highest,
+        maximumAge: 10000,
+      }).catch((e) => console.log("errore qui: ", e));
+      OnPositionLoaded(false);
       console.log("received location:", location);
       setTwok((c) => ({ ...c, lat: location.coords.latitude }));
       setTwok((c) => ({ ...c, lon: location.coords.longitude }));
@@ -190,12 +193,19 @@ const AddTwok = ({ navigation }) => {
             color={`#${twok.bgcol}`}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={getPositionAsync}>
-          <MaterialCommunityIcons
-            name="map-marker-radius"
-            size={50}
-            color="white"
-          />
+        <TouchableOpacity
+          onPress={getPositionAsync}
+          disabled={loadingPosition ? true : false}
+        >
+          {!loadingPosition ? (
+            <MaterialCommunityIcons
+              name="map-marker-radius"
+              size={50}
+              color="white"
+            />
+          ) : (
+            <MaterialCommunityIcons name="loading" size={50} color="white" />
+          )}
         </TouchableOpacity>
       </View>
       {chooseColor == 1 ? (
@@ -204,8 +214,9 @@ const AddTwok = ({ navigation }) => {
         <ColorList setColor={SetBgColor} close={SetChooseColor} />
       ) : null}
       <Button
-        color={"#4169E1"}
+        color={loadingPosition ? "#F0FFFF" : "#4169E1"}
         title="INVIA"
+        disabled={loadingPosition ? true : false}
         onPress={() => {
           console.log("testo: ", twok.text);
           addTwok(

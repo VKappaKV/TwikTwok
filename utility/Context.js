@@ -6,7 +6,7 @@ export const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState({
     sid: "",
     selectedUser: "",
-    tidSequence: 21,
+    tidSequence: -1,
   });
   return (
     <UserContext.Provider value={{ user, setUser }}>

@@ -20,7 +20,7 @@ export default function App() {
             name="Home"
             component={HomeBoard}
             options={({ navigation }) => ({
-              title: "Bacheca",
+              title: "HOME",
               headerStyle: {
                 backgroundColor: "#4169E1",
               },
@@ -47,7 +47,7 @@ export default function App() {
             name="AddTwok"
             component={AddTwok}
             options={({ navigation }) => ({
-              title: "Posta Un Twok",
+              title: "POST TWOK",
               headerStyle: {
                 backgroundColor: "#4169E1",
               },
@@ -74,7 +74,7 @@ export default function App() {
             name="UserBoard"
             component={UserBoard}
             options={({ navigation }) => ({
-              title: "Bacheca Utente",
+              title: "USER BOARD",
               headerStyle: {
                 backgroundColor: "#4169E1",
               },
@@ -101,7 +101,7 @@ export default function App() {
             name="Profile"
             component={Profile}
             options={({ navigation }) => ({
-              title: "Profilo",
+              title: "YOUR PROFILE",
               headerStyle: {
                 backgroundColor: "#4169E1",
               },
@@ -128,7 +128,7 @@ export default function App() {
             name="FollowedUsers"
             component={FollowedUsers}
             options={({ navigation }) => ({
-              title: "Utenti Seguiti",
+              title: "FOLLOWED USERS",
               headerStyle: {
                 backgroundColor: "#4169E1",
               },

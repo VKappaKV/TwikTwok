@@ -16,8 +16,12 @@ const RequestHandler = async (endpoint, params) => {
     const result = await httpRequest.json();
     return result;
   } else {
+    const errorLog = await httpRequest.text();
     const error = new Error(
-      "ERROR MESSAGE FROM THE SERVER. HTTP STATUS: " + httpRequest.status
+      "ERROR MESSAGE FROM THE SERVER. HTTP STATUS: " +
+        httpRequest.status +
+        " SERVER SAID: ",
+      errorLog
     );
     throw error;
   }
